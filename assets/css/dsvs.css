@@ -1,1 +1,88 @@
-.dsvs-block{--dsvs-primary:var(--e-global-color-primary,#006b35);--dsvs-secondary:var(--e-global-color-secondary,#292929);--dsvs-text:var(--e-global-color-text,inherit);--dsvs-accent:var(--e-global-color-accent,#00a9e0);font-family:inherit;color:var(--dsvs-text);margin-bottom:1.5rem}.dsvs-heading h2{color:var(--dsvs-primary);margin:0}.dsvs-heading h3{color:var(--dsvs-text);margin:.15rem 0 .75rem}.dsvs-table-wrap{overflow-x:auto}.dsvs-table{width:100%;border-collapse:collapse;font:inherit;color:inherit}.dsvs-table th{background:var(--dsvs-secondary);color:#fff;padding:.7rem .55rem}.dsvs-table td{padding:.65rem .55rem;border-bottom:1px solid rgba(127,127,127,.35)}.dsvs-table tr.dsvs-own-team{box-shadow:inset 5px 0 var(--dsvs-accent);font-weight:700}.dsvs-table tr.dsvs-own-team td:first-child{border-left:5px solid var(--dsvs-accent)}.dsvs-error,.dsvs-notice{border-left:4px solid var(--dsvs-accent);padding:.8rem;background:rgba(127,127,127,.07)}@media(max-width:640px){.dsvs-table{font-size:.84rem}}
+/* Elementor Global Colors are used when available. Fallbacks keep the plugin usable without Elementor. */
+.dsvs-block {
+    --dsvs-primary: var(--e-global-color-primary, #006b35);
+    --dsvs-secondary: var(--e-global-color-secondary, #292929);
+    --dsvs-text: var(--e-global-color-text, inherit);
+    --dsvs-accent: var(--e-global-color-accent, #00a9e0);
+    --dsvs-border: rgba(127, 127, 127, 0.35);
+    --dsvs-alternate-row: rgba(127, 127, 127, 0.07);
+
+    margin-bottom: 1.5rem;
+    color: var(--dsvs-text);
+    font-family: inherit;
+}
+
+.dsvs-heading h2 {
+    margin: 0;
+    color: var(--dsvs-primary);
+    font-family: inherit;
+}
+
+.dsvs-heading h3 {
+    margin: 0.15rem 0 0.75rem;
+    color: var(--dsvs-text);
+    font-family: inherit;
+}
+
+.dsvs-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dsvs-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: inherit;
+    font: inherit;
+}
+
+.dsvs-table th {
+    padding: 0.7rem 0.55rem;
+    color: #fff;
+    background-color: var(--dsvs-secondary);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dsvs-table td {
+    padding: 0.65rem 0.55rem;
+    border-bottom: 1px solid var(--dsvs-border);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dsvs-table tbody tr:nth-child(even) {
+    background-color: var(--dsvs-alternate-row);
+}
+
+/* TSV Böbingen I / II: Elementor Accent colour, without replacing the theme background. */
+.dsvs-table tr.dsvs-own-team {
+    box-shadow: inset 5px 0 0 var(--dsvs-accent);
+    font-weight: 700;
+}
+
+.dsvs-table tr.dsvs-own-team td:first-child {
+    border-left: 5px solid var(--dsvs-accent);
+}
+
+.dsvs-result {
+    font-weight: 700;
+}
+
+.dsvs-error,
+.dsvs-notice {
+    padding: 0.8rem;
+    border-left: 4px solid var(--dsvs-accent);
+    background: var(--dsvs-alternate-row);
+}
+
+@media (max-width: 640px) {
+    .dsvs-table {
+        font-size: 0.84rem;
+    }
+
+    .dsvs-table th,
+    .dsvs-table td {
+        padding: 0.48rem 0.38rem;
+    }
+}

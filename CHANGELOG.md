@@ -1,6 +1,17 @@
 # Changelog
+
+## 0.3.3
+- PHP, CSS und JavaScript für bessere Lesbarkeit refaktoriert
+- sprechende Variablennamen und klar getrennte Methoden
+- Liga-Konfiguration zentralisiert
+- keine beabsichtigte Änderung an Shortcodes oder Darstellung
+- Security-Härtungen und Elementor Global Colors bleiben erhalten
+
 ## 0.3.2
 - Elementor Global Colors eingebunden
-- Theme-Fallbacks und geerbte Typografie
-- Böbingen-Highlight nutzt Accent als linke Markierung
-- Security-Härtungen aus 0.3.1 beibehalten
+- Böbingen-Markierung auf Accent-Farbe umgestellt
+
+## 0.3.1
+- externe Requests gehärtet
+- Response-Größe begrenzt
+- REST-Liga-Whitelist ergänzt
