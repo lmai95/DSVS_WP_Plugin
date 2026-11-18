@@ -1,30 +1,47 @@
 # DSVS WP Plugin
 
-WordPress-Plugin für die C2-Liga des Dart Sport Verband Schwaben.
+WordPress-Plugin für mehrere Ligen des Dart Sport Verband Schwaben, Saison 2026/2027.
 
-## Version 0.2.0
-- Beide Teams `TSV Böbingen I` und `TSV Böbingen II` werden hervorgehoben.
-- Ligatabelle, aktuelle Ergebnisse, kommende Spiele und Teamspiele.
-- Aktuelle Ergebnisse werden über die WordPress REST API alle 60 Sekunden aktualisiert.
-- Der Browser fragt nur WordPress ab; WordPress ruft den DSVS dank Cache höchstens einmal pro Minute ab.
-- Getrennte Caches: Tabelle 10 Minuten, Spielplan 30 Minuten, aktuell 60 Sekunden.
-- Letzter erfolgreicher Abruf dient bei einem temporären DSVS-Ausfall als Fallback.
+## Version 0.3.0
+- Multi-Liga-Unterstützung: `OL`, `A`, `B`, `C1`, `C2`, `LC`, `CLVH`, `CLVR`
+- Liga und Ansicht werden automatisch als Überschrift ausgegeben
+- Kombinierte Übersicht der nächsten Spiele von TSV Böbingen I und II
+- Beide Böbinger Mannschaften werden hervorgehoben
+- Live-Aktualisierung aktueller Ergebnisse alle 60 Sekunden über WordPress REST API
+- Serverseitige Caches und Fallback auf den letzten erfolgreichen Abruf
 
 ## Installation
-Die ZIP-Datei über **Plugins > Installieren > Plugin hochladen** installieren und aktivieren.
+ZIP über **Plugins > Installieren > Plugin hochladen** installieren. Eine vorhandene Version kann ersetzt werden.
 
 ## Shortcodes
 ```
-[dsv_tabelle]
-[dsv_aktuelle_spiele]
-[dsv_aktuelle_spiele team="TSV Böbingen I" polling="true"]
-[dsv_kommende_spiele anzahl="4"]
-[dsv_kommende_spiele team="TSV Böbingen II" anzahl="6"]
-[dsv_team_spiele team="TSV Böbingen I" anzahl="10"]
+[dsv_tabelle liga="C2"]
+[dsv_tabelle liga="OL"]
+[dsv_aktuelle_spiele liga="C2"]
+[dsv_aktuelle_spiele liga="C1" polling="true"]
+[dsv_kommende_spiele liga="LC" anzahl="10"]
+[dsv_kommende_spiele liga="C2" team="TSV Böbingen II" anzahl="6"]
+[dsv_team_spiele liga="C2" team="TSV Böbingen I" anzahl="10"]
+[dsv_boebingen anzahl="8"]
 ```
+Mit `titel="false"` lassen sich Plugin-Überschriften unterdrücken.
 
-## Hinweise
-"Aktuell" entspricht den Daten, die der DSVS auf der Quellseite veröffentlicht. Das Plugin erzeugt keine eigenen Zwischenstände. PHP benötigt die DOM-Erweiterung (`DOMDocument`).
+## Liga-Kürzel
+| Kürzel | Wettbewerb |
+|---|---|
+| OL | Oberliga |
+| A oder AL | A-Liga |
+| B | B-Liga |
+| C1 | C1-Liga |
+| C2 | C2-Liga |
+| LC | Liga Cup |
+| CLVH | C-Liga Vergleichskampf Hinrunde |
+| CLVR | C-Liga Vergleichskampf Rückrunde |
+
+Cup und Vergleichskämpfe haben möglicherweise keine klassische Tabelle. In diesem Fall zeigt `[dsv_tabelle]` einen Hinweis.
+
+## Anforderungen
+WordPress, PHP 7.4 oder neuer und PHP-DOM (`DOMDocument`).
 
 ## Lizenz
 GPL-2.0-or-later.
