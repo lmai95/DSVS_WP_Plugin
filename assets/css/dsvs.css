@@ -1,9 +1,9 @@
-/* Elementor Global Colors are used when available. Fallbacks keep the plugin usable without Elementor. */
+/* UiCore/Elementor Global Colors are preferred. Standard Elementor variables and safe fallbacks remain supported. */
 .dsvs-block {
-    --dsvs-primary: var(--e-global-color-primary, #006b35);
-    --dsvs-secondary: var(--e-global-color-secondary, #292929);
-    --dsvs-text: var(--e-global-color-text, inherit);
-    --dsvs-accent: var(--e-global-color-accent, #00a9e0);
+    --dsvs-primary: var(--e-global-color-uicore_primary, var(--e-global-color-primary, #00672a));
+    --dsvs-secondary: var(--e-global-color-uicore_secondary, var(--e-global-color-secondary, #00672a));
+    --dsvs-text: var(--e-global-color-uicore_body, var(--e-global-color-text, #070707));
+    --dsvs-accent: var(--e-global-color-uicore_accent, var(--e-global-color-accent, #00672a));
     --dsvs-border: rgba(127, 127, 127, 0.35);
     --dsvs-alternate-row: rgba(127, 127, 127, 0.07);
 

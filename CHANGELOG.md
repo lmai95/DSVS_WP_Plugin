@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4
+- UiCore Global Colors ergänzt
+- `uicore_primary`, `uicore_secondary`, `uicore_body` und `uicore_accent` werden bevorzugt
+- Standard-Elementor-Farbvariablen bleiben als zweiter Fallback erhalten
+- Accent-Fallback von Blau auf TSV-Grün `#00672A` geändert
+
 ## 0.3.3
 - PHP, CSS und JavaScript für bessere Lesbarkeit refaktoriert
 - sprechende Variablennamen und klar getrennte Methoden

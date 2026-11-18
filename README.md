@@ -36,12 +36,12 @@ Ohne `liga` wird C2 verwendet.
 
 Das Plugin verwendet die globalen Elementor-Farben automatisch:
 
-- **Primary:** Ligaüberschrift
-- **Secondary:** Tabellenkopf
-- **Text:** Texte
-- **Accent:** Markierung für TSV Böbingen I und TSV Böbingen II
+- **UiCore Primary** (`--e-global-color-uicore_primary`): Ligaüberschrift
+- **UiCore Secondary** (`--e-global-color-uicore_secondary`): Tabellenkopf
+- **UiCore Body** (`--e-global-color-uicore_body`): Texte
+- **UiCore Accent** (`--e-global-color-uicore_accent`): Markierung für TSV Böbingen I und TSV Böbingen II
 
-Die Farben werden in Elementor unter **Website-Einstellungen / Theme Style → Globale Farben** gepflegt. Ohne Elementor greifen Fallback-Werte.
+Die Farben werden im UiCore/Elementor Style Kit unter **Theme Style → Globale Farben** gepflegt. Das Plugin verwendet zuerst die UiCore-Variablen, danach Standard-Elementor-Variablen und erst zuletzt feste Fallback-Werte.
 
 ## Aktualisierung
 
@@ -73,7 +73,7 @@ Die URLs sind derzeit für 2026/2027 hinterlegt. Für eine neue Saison muss die 
 
 ## Entwicklung
 
-Version 0.3.3 ist funktional zu 0.3.2 ausgerichtet, aber der Code wurde lesbarer strukturiert:
+Version 0.3.4 ist funktional zu 0.3.2 ausgerichtet, aber der Code wurde lesbarer strukturiert:
 
 - sprechende Variablennamen
 - kleine Methoden mit klarer Aufgabe
