@@ -2,7 +2,7 @@
 /**
  * Plugin Name: DSVS WP Plugin
  * Description: Tabellen sowie aktuelle und kommende Spiele mehrerer DSVS-Ligen.
- * Version: 0.3.0
+ * Version: 0.3.1
  * Author: Lukas Maier
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -10,7 +10,7 @@
  */
 if (!defined('ABSPATH')) exit;
 
-define('DSVS_VERSION', '0.3.0');
+define('DSVS_VERSION', '0.3.1');
 define('DSVS_TEAMS', array('TSV Böbingen I', 'TSV Böbingen II'));
 define('DSVS_TABLE_CACHE', 10 * MINUTE_IN_SECONDS);
 define('DSVS_SCHEDULE_CACHE', 30 * MINUTE_IN_SECONDS);
@@ -111,9 +111,18 @@ add_action('rest_api_init', function () {
         'methods' => WP_REST_Server::READABLE,
         'callback' => 'dsvs_rest_current',
         'permission_callback' => '__return_true',
-        'args' => array('liga' => array('default' => 'C2', 'sanitize_callback' => 'sanitize_text_field')),
+        'args' => array('liga' => array(
+            'default' => 'C2',
+            'sanitize_callback' => 'sanitize_text_field',
+            'validate_callback' => 'dsvs_validate_rest_league',
+        )),
     ));
 });
+
+function dsvs_validate_rest_league($value, $request = null, $param = null) {
+    return DSVS_Leagues::get($value) !== false;
+}
+
 function dsvs_rest_current(WP_REST_Request $request) {
     $data = dsvs_data($request->get_param('liga'), 'live');
     if (is_wp_error($data)) return new WP_REST_Response(array('message' => $data->get_error_message()), 400);

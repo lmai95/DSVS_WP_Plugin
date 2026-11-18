@@ -2,7 +2,8 @@
 
 WordPress-Plugin für mehrere Ligen des Dart Sport Verband Schwaben, Saison 2026/2027.
 
-## Version 0.3.0
+## Version 0.3.1
+- Sicherheits-/Robustheitsupdate: `wp_safe_remote_get()`, 1-MiB-Response-Limit, DSVS-HTML-Plausibilitätsprüfung und REST-Liga-Whitelist
 - Multi-Liga-Unterstützung: `OL`, `A`, `B`, `C1`, `C2`, `LC`, `CLVH`, `CLVR`
 - Liga und Ansicht werden automatisch als Überschrift ausgegeben
 - Kombinierte Übersicht der nächsten Spiele von TSV Böbingen I und II

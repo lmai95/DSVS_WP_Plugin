@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1
+- Externe Requests auf `wp_safe_remote_get()` umgestellt
+- Maximale DSVS-Antwortgröße auf 1 MiB begrenzt
+- Antworten werden vor dem Speichern als Last-known-good plausibilisiert
+- REST-Parameter `liga` strikt gegen die konfigurierte Liga-Whitelist validiert
+- Ungültige Liga-Werte werden von der REST API abgelehnt
+
 ## 0.3.0
 - Acht DSVS-Wettbewerbe konfiguriert
 - `liga`-Parameter für alle Shortcodes
