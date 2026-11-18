@@ -1,23 +1,6 @@
 # Changelog
-
-## 0.3.1
-- Externe Requests auf `wp_safe_remote_get()` umgestellt
-- Maximale DSVS-Antwortgröße auf 1 MiB begrenzt
-- Antworten werden vor dem Speichern als Last-known-good plausibilisiert
-- REST-Parameter `liga` strikt gegen die konfigurierte Liga-Whitelist validiert
-- Ungültige Liga-Werte werden von der REST API abgelehnt
-
-## 0.3.0
-- Acht DSVS-Wettbewerbe konfiguriert
-- `liga`-Parameter für alle Shortcodes
-- Automatische Ligaüberschriften
-- Neuer Shortcode `[dsv_boebingen]`
-- REST-Aktualisierung pro Liga
-- Freilose in kommenden Spielen ausgeblendet
-- PHP-7.4-kompatible Callback-Syntax
-
-## 0.2.0
-- Zwei Böbinger Teams, Spielplan, REST-Aktualisierung und getrennte Caches
-
-## 0.1.0
-- Erste Ligatabelle mit `[dsv_tabelle]`
+## 0.3.2
+- Elementor Global Colors eingebunden
+- Theme-Fallbacks und geerbte Typografie
+- Böbingen-Highlight nutzt Accent als linke Markierung
+- Security-Härtungen aus 0.3.1 beibehalten
