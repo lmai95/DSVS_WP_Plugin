@@ -20,5 +20,5 @@ final class DSVS_Settings {
         <tr><th scope="row"><label for="dsvs-teams">Mannschaften hervorheben</label></th><td><textarea id="dsvs-teams" class="large-text code" rows="7" name="<?php echo esc_attr(self::OPTION_NAME); ?>[highlighted_teams]"><?php echo esc_textarea($s['highlighted_teams']); ?></textarea><p class="description">Eine Mannschaft pro Zeile. Schreibweise muss der DSVS-Seite entsprechen.</p></td></tr>
         <tr><th scope="row"><label for="dsvs-season">Saison</label></th><td><input id="dsvs-season" class="regular-text" name="<?php echo esc_attr(self::OPTION_NAME); ?>[season]" value="<?php echo esc_attr($s['season']); ?>" pattern="[0-9]{4}/[0-9]{4}"><p class="description">Format: 2026/2027. Die Liga-IDs bleiben saisonabhängig in der Liga-Konfiguration hinterlegt.</p></td></tr>
         </table><?php submit_button(); ?></form>
-        <hr><h2>Bestehende Shortcodes</h2><code>[dsv_tabelle liga="C2"]</code><br><code>[dsv_aktuelle_spiele liga="C2"]</code><br><code>[dsv_kommende_spiele liga="C2" anzahl="6"]</code></div><?php }
+        <hr><h2>Bestehende Shortcodes</h2><code>[dsv_tabelle liga="C2"]</code><br><code>[dsv_aktuelle_spiele liga="C2"]</code><br><code>[dsv_kommende_spiele liga="C2" anzahl="6"]</code><br><code>[dsv_rangliste liga="C2"]</code></div><?php }
 }

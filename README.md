@@ -1,6 +1,6 @@
 # DSVS WP Plugin
 
-Version 0.4.0 ergänzt eine allgemeine Einstellungsseite und erhält alle bestehenden Shortcodes.
+Version 0.4.1 ergänzt eine allgemeine Einstellungsseite und erhält alle bestehenden Shortcodes.
 
 ## Installation
 1. ZIP unter **Plugins → Installieren → Plugin hochladen** installieren.
@@ -20,6 +20,7 @@ Standardwerte bleiben TSV Böbingen I und II, damit bestehende Installationen na
 [dsv_tabelle liga="C2"]
 [dsv_aktuelle_spiele liga="C2"]
 [dsv_kommende_spiele liga="C2" anzahl="6"]
+[dsv_rangliste liga="C2"]
 ```
 
 ## Farben
@@ -30,3 +31,6 @@ Die Saison wird aus den Einstellungen übernommen. Die Liga-IDs in `class-dsvs-l
 
 ## Lizenz
 GPL-2.0-or-later.
+
+## Rangliste
+`[dsv_rangliste liga="C2"]` lädt die DSVS-Spielerrangliste „Begegnungen“ der gewählten Liga. Spieler der unter **Einstellungen → DSVS Liga** hinterlegten Mannschaften werden mit der Accent-Farbe markiert.

@@ -2,13 +2,13 @@
 /**
  * Plugin Name: DSVS WP Plugin
  * Description: Tabellen sowie aktuelle und kommende Spiele mehrerer DSVS-Ligen.
- * Version: 0.4.0
+ * Version: 0.4.1
  * Author: Lukas Maier
  * License: GPL-2.0-or-later
  * Text Domain: dsvs-wp-plugin
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'DSVS_VERSION', '0.4.0' );
+define( 'DSVS_VERSION', '0.4.1' );
 define( 'DSVS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DSVS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DSVS_LIVE_CACHE_SECONDS', 60 );
@@ -55,6 +55,38 @@ function dsvs_upcoming_games_shortcode( $attributes ) {
     return DSVS_Renderer::games($games,$data['league'],'Kommende Spiele');
 }
 add_shortcode('dsv_kommende_spiele','dsvs_upcoming_games_shortcode');
+
+/** Build the DSVS ranking URL belonging to a configured league. */
+function dsvs_get_ranking_url( $league ) {
+    $season = DSVS_Settings::season();
+    return sprintf(
+        'https://dsv-schwaben.de/sb_ligarangliste.php?p=209--%s-%d-0',
+        $season,
+        absint( $league['id'] )
+    );
+}
+
+/** Shortcode: [dsv_rangliste liga="C2"] */
+function dsvs_ranking_shortcode( $attributes ) {
+    $attributes = shortcode_atts( array( 'liga' => 'C2' ), $attributes, 'dsv_rangliste' );
+    dsvs_enqueue_assets();
+
+    $league = DSVS_Leagues::get( $attributes['liga'] );
+    if ( ! $league ) {
+        return DSVS_Renderer::error();
+    }
+
+    $ranking_url = dsvs_get_ranking_url( $league );
+    $html = DSVS_Fetcher::get( $ranking_url, DSVS_TABLE_CACHE_SECONDS, 'ranking_' . $league['key'] );
+    if ( is_wp_error( $html ) ) {
+        return DSVS_Renderer::error();
+    }
+
+    $ranking = DSVS_Parser::get_ranking( $html );
+    return DSVS_Renderer::ranking( $ranking, $league );
+}
+add_shortcode( 'dsv_rangliste', 'dsvs_ranking_shortcode' );
+
 function dsvs_validate_rest_league($value){return false!==DSVS_Leagues::get($value);}
 add_action('rest_api_init',function(){register_rest_route('dsvs/v1','/current',array('methods'=>WP_REST_Server::READABLE,'permission_callback'=>'__return_true','args'=>array('liga'=>array('default'=>'C2','sanitize_callback'=>'sanitize_text_field','validate_callback'=>'dsvs_validate_rest_league')),'callback'=>'dsvs_rest_current_games'));});
 function dsvs_rest_current_games(WP_REST_Request $request){$data=dsvs_get_league_data($request->get_param('liga'),'live');if(is_wp_error($data)){return new WP_REST_Response(array('message'=>'DSVS data unavailable.'),503);}return rest_ensure_response(array('html'=>DSVS_Renderer::games($data['current'],$data['league'],'Aktuelle Ergebnisse','dsvs-live-'.strtolower($data['league']['key']),true)));}
