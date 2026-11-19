@@ -1,0 +1,44 @@
+name: Build and publish WordPress plugin release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Build WordPress installable ZIP
+        id: package
+        shell: bash
+        run: |
+          set -euo pipefail
+          plugin_slug="dsvs-wp-plugin"
+          version="${GITHUB_REF_NAME}"
+          staging="${RUNNER_TEMP}/package/${plugin_slug}"
+          zip_path="${RUNNER_TEMP}/${plugin_slug}-${version}.zip"
+
+          mkdir -p "$staging"
+          cp dsvs-wp-plugin.php README.md CHANGELOG.md LICENSE "$staging/"
+          cp -R includes assets "$staging/"
+          (
+            cd "$(dirname "$staging")"
+            zip -qr "$zip_path" "$plugin_slug"
+          )
+
+          echo "zip_path=$zip_path" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub release and attach ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" "${{ steps.package.outputs.zip_path }}" \
+            --title "DSVS WP Plugin $GITHUB_REF_NAME" \
+            --generate-notes
