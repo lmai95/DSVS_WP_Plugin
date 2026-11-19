@@ -2,13 +2,13 @@
 /**
  * Plugin Name: DSVS WP Plugin
  * Description: Tabellen sowie aktuelle und kommende Spiele mehrerer DSVS-Ligen.
- * Version: 0.4.1
+ * Version: 0.4.4
  * Author: Lukas Maier
  * License: GPL-2.0-or-later
  * Text Domain: dsvs-wp-plugin
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'DSVS_VERSION', '0.4.1' );
+define( 'DSVS_VERSION', '0.4.4' );
 define( 'DSVS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DSVS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DSVS_LIVE_CACHE_SECONDS', 60 );
