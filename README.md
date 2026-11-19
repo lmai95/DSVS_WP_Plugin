@@ -1,87 +1,148 @@
 # DSVS WP Plugin
 
-Version 0.4.4 ergänzt eine allgemeine Einstellungsseite und erhält alle bestehenden Shortcodes.
+WordPress-Plugin zur Einbindung von Tabellen, aktuellen Ergebnissen, kommenden Spielen und Spielerranglisten des Dart Sport Verband Schwaben (DSVS).
+
+## Funktionen
+
+- mehrere DSVS-Ligen und Wettbewerbe
+- Ligatabellen
+- aktuelle Ergebnisse mit regelmäßigem Live-Refresh
+- kommende Spiele der konfigurierten eigenen Mannschaften
+- Spielerrangliste „Begegnungen“
+- frei konfigurierbarer Verein und beliebig viele eigene Mannschaften
+- UiCore-/Elementor-Farben mit Fallbacks
+- serverseitiger WordPress-Cache
+- abgesicherte externe Requests
 
 ## Installation
-1. ZIP unter **Plugins → Installieren → Plugin hochladen** installieren.
+
+1. `dsvs-wp-plugin-0.4.6.zip` unter **Plugins → Installieren → Plugin hochladen** installieren.
 2. Plugin aktivieren.
-3. Unter **Einstellungen → DSVS Liga** Verein, Mannschaften und Saison festlegen.
-4. In Elementor ein Shortcode-Widget verwenden.
+3. Unter **Einstellungen → DSVS Liga** Verein, eigene Mannschaften und Saison konfigurieren.
+4. In Elementor ein Shortcode-Widget oder in WordPress einen Shortcode-Block einfügen.
 
 ## Einstellungen
-- **Vereinsname**: frei wählbar.
-- **Mannschaften hervorheben**: eine exakte DSVS-Mannschaftsbezeichnung pro Zeile.
-- **Saison**: Format `2026/2027`.
 
-Standardwerte bleiben TSV Böbingen I und II, damit bestehende Installationen nach dem Update unverändert funktionieren.
+### Vereinsname
+Frei wählbarer Name des Vereins.
 
-## Bestehende Shortcodes
+### Mannschaften hervorheben
+Eine exakte DSVS-Mannschaftsbezeichnung pro Zeile. Diese Liste steuert:
+
+- farbliche Hervorhebung in Tabellen und Ranglisten
+- Auswahl der kommenden eigenen Spiele
+- Option `eigene="true"` der Spielerrangliste
+
+### Saison
+Format `2026/2027`. Die Liga-IDs müssen bei einem Saisonwechsel weiterhin geprüft werden.
+
+## Shortcodes
+
+### Ligatabelle
+
 ```text
 [dsv_tabelle liga="C2"]
+```
+
+### Aktuelle Ergebnisse
+
+```text
 [dsv_aktuelle_spiele liga="C2"]
+```
+
+### Kommende eigene Spiele
+
+```text
 [dsv_kommende_spiele liga="C2" anzahl="6"]
-[dsv_rangliste liga="C2"]
 ```
 
-## Farben
-UiCore-Farben werden bevorzugt: `uicore_primary`, `uicore_secondary`, `uicore_body`, `uicore_accent`. Standard-Elementor-Variablen und sichere Fallbacks bleiben erhalten.
-
-## Hinweis zur Saison
-Die Saison wird aus den Einstellungen übernommen. Die Liga-IDs in `class-dsvs-leagues.php` müssen bei einer neuen DSVS-Saison geprüft werden.
-
-## Lizenz
-GPL-2.0-or-later.
-
-## Spielerrangliste
-
-Mit dem Shortcode
+### Spielerrangliste
 
 ```text
 [dsv_rangliste liga="C2"]
 ```
 
-wird die DSVS-Spielerrangliste **Begegnungen** der gewählten Liga eingebunden. Die Rangliste wird aus der zur Liga gehörenden DSVS-Ranglistenseite ausgelesen und verwendet dasselbe Design wie die übrigen Plugin-Tabellen.
+Ohne weitere Parameter zeigt die Rangliste **Top 20 plus alle Spieler der konfigurierten eigenen Mannschaften**.
 
-Die Ausgabe enthält:
+#### Parameter `anzahl`
 
-- **Rang**
-- **Spieler / Mannschaft**
-- **Spiele**
-- **Siege**
-- **Niederlagen**
-- **Siegquote**
-
-Spielername und Mannschaft werden getrennt dargestellt. Beispiel:
+Bestimmt, wie viele Plätze vom Anfang der Rangliste angezeigt werden.
 
 ```text
-Moritz Boger
-TSV Böbingen I
+[dsv_rangliste liga="C2" anzahl="10"]
+[dsv_rangliste liga="C2" anzahl="20"]
+[dsv_rangliste liga="C2" anzahl="30"]
 ```
 
-Die Mannschaftszeile wird außerdem verwendet, um Einträge der unter **Einstellungen → DSVS Liga → Mannschaften hervorheben** konfigurierten Teams zu erkennen. Passende Spieler werden mit der UiCore-/Elementor-Accent-Farbe markiert. Dadurch funktioniert die Hervorhebung auch für andere Vereine, wenn dort deren exakte DSVS-Mannschaftsnamen eingetragen werden.
-
-Weitere Beispiele:
+`anzahl="0"` zeigt die vollständige Rangliste:
 
 ```text
-[dsv_rangliste liga="OL"]
-[dsv_rangliste liga="A"]
-[dsv_rangliste liga="B"]
-[dsv_rangliste liga="C1"]
-[dsv_rangliste liga="C2"]
+[dsv_rangliste liga="C2" anzahl="0"]
 ```
 
-Nicht jeder Wettbewerb muss eine entsprechende Spielerrangliste bereitstellen. Wenn keine passende Rangliste erkannt wird, zeigt das Plugin einen neutralen Hinweis statt einer leeren oder fehlerhaften Tabelle.
+#### Parameter `eigene`
 
-### Fehlerbehebung bei der Rangliste
+Mit `eigene="true"` werden zusätzlich zu den Top-N-Plätzen alle Spieler der unter **Einstellungen → DSVS Liga** hinterlegten Mannschaften angezeigt, auch wenn deren Rang außerhalb von `anzahl` liegt. Das ist der Standard.
 
-Wenn Spieler oder Mannschaften nicht korrekt getrennt erscheinen:
+```text
+[dsv_rangliste liga="C2" anzahl="20" eigene="true"]
+```
 
-1. WordPress-/Elementor-Cache leeren.
-2. Browser-Cache aktualisieren.
-3. Prüfen, ob tatsächlich Plugin-Version **0.4.4** aktiv ist.
-4. Prüfen, ob sich die HTML-Struktur der DSVS-Ranglistenseite geändert hat.
+Nur exakt die ersten 20 Plätze:
 
-Version 0.4.4 behandelt Spielername und Mannschaft anhand der Struktur der DSVS-Tabellenzelle getrennt. Reine Statistikwerte werden nicht als Bestandteil des Spielernamens übernommen.
+```text
+[dsv_rangliste liga="C2" anzahl="20" eigene="false"]
+```
+
+Die Ausgabe enthält **Rang**, **Spieler / Mannschaft**, **Spiele**, **Siege**, **Niederlagen** und **Siegquote**.
+
+## Unterstützte Liga-Kürzel
+
+| Kürzel | Wettbewerb |
+|---|---|
+| `OL` | Oberliga |
+| `A` / `AL` | A-Liga |
+| `B` | B-Liga |
+| `C1` | C1-Liga |
+| `C2` | C2-Liga |
+| `LC` | Liga Cup |
+| `CLVH` | C-Liga Vergleichskampf Hinrunde |
+| `CLVR` | C-Liga Vergleichskampf Rückrunde |
+
+Nicht jeder Wettbewerb muss eine klassische Tabelle oder Spielerrangliste anbieten.
+
+## Styling
+
+Das Plugin bevorzugt UiCore-/Elementor-Variablen:
+
+- `uicore_primary`: Überschriften
+- `uicore_secondary`: Tabellenkopf
+- `uicore_body`: Text
+- `uicore_accent`: Hervorhebung eigener Mannschaften und Spieler
+
+Falls UiCore nicht vorhanden ist, werden Standard-Elementor-Variablen und anschließend sichere Fallback-Farben verwendet.
+
+## Cache
+
+- aktuelle Ergebnisse: ca. 60 Sekunden
+- Tabellen und Ranglisten: ca. 10 Minuten
+- Spielplan: ca. 30 Minuten
+
+## Sicherheit
+
+- externe Requests über `wp_safe_remote_get()`
+- Response-Größe auf 1 MiB begrenzt
+- REST-Liga-Parameter gegen die konfigurierte Liga-Liste validiert
+- externe Inhalte vor der Ausgabe escaped
+- keine API-Schlüssel oder Passwörter
+- keine eigenen Datenbanktabellen
+
+## Voraussetzungen
+
+- WordPress
+- PHP mit `DOMDocument` / PHP-DOM
+- HTTPS-Zugriff auf `dsv-schwaben.de`
+- Elementor/UiCore optional
 
 ## Lizenz
 

@@ -2,13 +2,13 @@
 /**
  * Plugin Name: DSVS WP Plugin
  * Description: Tabellen sowie aktuelle und kommende Spiele mehrerer DSVS-Ligen.
- * Version: 0.4.4
+ * Version: 0.4.6
  * Author: Lukas Maier
  * License: GPL-2.0-or-later
  * Text Domain: dsvs-wp-plugin
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
-define( 'DSVS_VERSION', '0.4.4' );
+define( 'DSVS_VERSION', '0.4.6' );
 define( 'DSVS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'DSVS_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DSVS_LIVE_CACHE_SECONDS', 60 );
@@ -68,7 +68,15 @@ function dsvs_get_ranking_url( $league ) {
 
 /** Shortcode: [dsv_rangliste liga="C2"] */
 function dsvs_ranking_shortcode( $attributes ) {
-    $attributes = shortcode_atts( array( 'liga' => 'C2' ), $attributes, 'dsv_rangliste' );
+    $attributes = shortcode_atts(
+        array(
+            'liga'   => 'C2',
+            'anzahl' => 20,
+            'eigene' => 'true',
+        ),
+        $attributes,
+        'dsv_rangliste'
+    );
     dsvs_enqueue_assets();
 
     $league = DSVS_Leagues::get( $attributes['liga'] );
@@ -83,6 +91,10 @@ function dsvs_ranking_shortcode( $attributes ) {
     }
 
     $ranking = DSVS_Parser::get_ranking( $html );
+    $limit = absint( $attributes['anzahl'] );
+    $include_own = filter_var( $attributes['eigene'], FILTER_VALIDATE_BOOLEAN );
+    $ranking = DSVS_Parser::filter_ranking( $ranking, $limit, $include_own );
+
     return DSVS_Renderer::ranking( $ranking, $league );
 }
 add_shortcode( 'dsv_rangliste', 'dsvs_ranking_shortcode' );

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.6
+- `[dsv_rangliste]` um Parameter `anzahl` erweitert
+- Standardmäßig werden die Top 20 Plätze angezeigt
+- `anzahl="0"` zeigt die vollständige Rangliste
+- Neuer Parameter `eigene`: bei `true` werden Spieler konfigurierter eigener Mannschaften zusätzlich zu den Top-N angezeigt
+- `eigene="false"` begrenzt die Ausgabe strikt auf `anzahl`
+- README vollständig aktualisiert und allgemein gehalten
+
+## 0.4.5
+- Ranglistenparser an die echte 7-spaltige DSVS-HTML-Struktur angepasst
+- Logo-Spalte wird beim Parsing bewusst übersprungen
+- Spielername wird aus dem DSVS-Statistik-Link gelesen
+- Mannschaft wird aus dem Text nach dem Zeilenumbruch gelesen
+- Spiele, Siege, Niederlagen und Siegquote werden direkt aus den Spalten 4 bis 7 übernommen
+
 ## 0.4.4
 - Ranglistenparser korrigiert: Spielername und Mannschaft werden anhand der DOM-/Zeilenstruktur getrennt
 - Numerische Statistikwerte werden nicht mehr als Namensbestandteil interpretiert
